@@ -1,0 +1,98 @@
+/*****************************************************************************/
+/*  LibreDWG - free implementation of the DWG file format                    */
+/*                                                                           */
+/*  Copyright (C) 2009 Free Software Foundation, Inc.                        */
+/*                                                                           */
+/*  This library is free software, licensed under the terms of the GNU       */
+/*  General Public License as published by the Free Software Foundation,     */
+/*  either version 3 of the License, or (at your option) any later version.  */
+/*  You should have received a copy of the GNU General Public License        */
+/*  along with this program.  If not, see <http://www.gnu.org/licenses/>.    */
+/*****************************************************************************/
+
+/*
+ * header.c: header functions
+ * written by Felipe Castro
+ * modified by Felipe Corrêa da Silva Sances
+ * modified by Rodrigo Rodrigues da Silva
+ * modified by Till Heuschmann
+ */
+
+#include "header.h"
+#include "decode_r2004.h"
+  #include "header_variables.spec"
+
+extern unsigned int
+bit_ckr8(unsigned int dx, unsigned char *adr, long n);
+
+static void
+dwg_decode_header_variables(Bit_Chain *dat, Dwg_Data *dwg)
+{
+  Dwg_Header_Variables* _obj = &dwg->header_vars;
+  Dwg_Object* obj = 0;
+
+
+}
+
+/* Read R13-R15 Header Section
+ */
+static void
+read_R13_R15_section_header(Bit_Chain *dat, Dwg_Data *dwg)
+{
+  unsigned long int pvz;
+  unsigned int ckr, ckr2;
+
+  LOG_INFO("\n Header Variables: %8X\n",
+           (unsigned int) dwg->header.section[0].address)
+  LOG_INFO(" Header Variables (end): %8X\n",
+           (unsigned int) (dwg->header.section[0].address
+           + dwg->header.section[0].size))
+
+  dat->byte = dwg->header.section[0].address + 16;
+  pvz = bit_read_RL(dat);
+  LOG_TRACE(" Length: %lu\n", pvz)
+
+  dat->bit = 0;
+  dwg_decode_header_variables(dat, dwg);
+
+  // Check CRC-on
+  dat->byte = dwg->header.section[0].address
+              + dwg->header.section[0].size - 18;
+  dat->bit = 0;
+  ckr = bit_read_RS(dat);
+  ckr2 = bit_ckr8(0xc0c1, dat->chain + dwg->header.section[0].address
+                  + 16, dwg->header.section[0].size - 34);
+
+  if (ckr != ckr2)
+    {
+      printf("section %d crc todo ckr:%x ckr2:%x\n",
+              dwg->header.section[0].number, ckr, ckr2);
+      return -1;
+    }
+}
+
+/* R2004 Header Section
+ */
+static void
+read_2004_section_header(Bit_Chain* dat, Dwg_Data *dwg)
+{
+  Bit_Chain sec_dat;
+
+  if (read_2004_compressed_section(dat, dwg, &sec_dat, 
+      SECTION_HEADER) != 0)
+    return;
+
+  if (bit_search_sentinel(&sec_dat, 
+      dwg_sentinel(DWG_SENTINEL_VARIABLE_BEGIN)))
+    {
+      unsigned long int size = bit_read_RL(&sec_dat);
+      LOG_TRACE("Length: %lu\n", size);
+      
+      dwg_decode_header_variables(&sec_dat, dwg);
+    }
+  free(sec_dat.chain);
+}
+
+
+
+

@@ -1,0 +1,128 @@
+/*****************************************************************************/
+/*  LibreDWG - free implementation of the DWG file format                    */
+/*                                                                           */
+/*  Copyright (C) 2009 Free Software Foundation, Inc.                        */
+/*                                                                           */
+/*  This library is free software, licensed under the terms of the GNU       */
+/*  General Public License as published by the Free Software Foundation,     */
+/*  either version 3 of the License, or (at your option) any later version.  */
+/*  You should have received a copy of the GNU General Public License        */
+/*  along with this program.  If not, see <http://www.gnu.org/licenses/>.    */
+/*****************************************************************************/
+
+/*
+ * decode.c: decoding functions
+ * written by Felipe Castro
+ * modified by Felipe Corrêa da Silva Sances
+ * modified by Rodrigo Rodrigues da Silva
+ * modified by Till Heuschmann
+ */
+
+#include "config.h"
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <assert.h>
+
+#include "common.h"
+#include "bits.h"
+#include "dwg.h"
+#include "decode.h"
+#include "print.h"
+
+
+static void
+resolve_R13_R15_handle(Bit_Chain *dat, Dwg_Data *dwg)
+{
+  LOG_INFO("\n=======> Unknown 2: %8X\n",
+          (unsigned int) dwg->header.section[4].address)
+  LOG_INFO("         Unknown 2 (end): %8X\n",
+          (unsigned int) (dwg->header.section[4].address
+              + dwg->header.section[4].size))
+  dat->byte = dwg->header.section[4].address;
+  dat->bit = 0;
+  dwg->measurement = bit_read_RL(dat);
+
+  LOG_TRACE("         Size bytes :\t%lu\n", dat->size)
+
+  //step II of handles parsing: resolve pointers from handle value
+  //XXX: move this somewhere else
+  LOG_TRACE("\n\nResolving pointers from ObjectRef vector.\n")
+  resolve_objectref_vector(dwg);
+  LOG_TRACE("\n")
+}
+
+static void
+resolve_R2004_handle(Bit_Chain *dat, Dwg_Data *dwg)
+{
+}
+
+static void
+resolve_objectref_vector(Dwg_Data * dwg)
+{
+  long unsigned int i;
+  Dwg_Object * obj;
+  for (i = 0; i < dwg->num_object_refs; i++)
+    {
+      LOG_TRACE("\n==========\n")
+      LOG_TRACE("-objref: HANDLE(%d.%d.%lu) Absolute:%lu\n",
+          dwg->object_ref[i]->handleref.code,
+          dwg->object_ref[i]->handleref.size,
+          dwg->object_ref[i]->handleref.value,
+          dwg->object_ref[i]->absolute_ref)
+
+      //look for object
+      obj = dwg_resolve_handle(dwg, dwg->object_ref[i]->absolute_ref);
+
+      if(obj)
+        {
+          LOG_TRACE("-found:  HANDLE(%d.%d.%lu)\n",
+              obj->handle.code,
+              obj->handle.size,
+              obj->handle.value)
+        }
+
+      //assign found pointer to objectref vector
+      dwg->object_ref[i]->obj = obj;
+
+
+      if (DWG_LOGLEVEL >= DWG_LOGLEVEL_INSANE)
+        {
+          if (obj)
+            dwg_print_object(obj);
+          else
+            LOG_ERROR("Null object pointer: object_ref[%lu]\n", i)
+        }
+    }
+}
+
+/* R2004 Literal Length
+ */
+static int
+read_literal_length(Bit_Chain* dat, unsigned char *opcode)
+{
+  int total = 0;
+  unsigned char byte = bit_read_RC(dat);
+
+  *opcode = 0x00;
+
+  if (byte >= 0x01 && byte <= 0x0F)
+    return byte + 3;
+  else if (byte == 0)
+    {
+      total = 0x0F;
+      while ((byte = bit_read_RC(dat)) == 0x00)
+        {
+          total += 0xFF;
+        }
+      return total + byte + 3;
+    }
+  else if (byte & 0xF0)
+    *opcode = byte;
+
+  return 0;
+}
+
+
+
