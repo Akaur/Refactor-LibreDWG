@@ -20,7 +20,12 @@
 
 
 #include "object.h"
-#include<dwg.spec>
+#include <dwg.spec>
+#include "decode.h"
+
+static unsigned int loglevel;
+
+#define DWG_LOGLEVEL loglevel
 
 /* --------------------------------------
  * Private Function
@@ -31,7 +36,6 @@ dwg_decode_variable_type(Dwg_Data * dwg, Bit_Chain * dat,
 
 /* Decode object
  */
-
 static void
 dwg_decode_add_object(Dwg_Data *dwg, Bit_Chain *dat,
                       long unsigned int address)

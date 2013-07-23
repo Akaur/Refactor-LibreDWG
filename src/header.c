@@ -20,6 +20,7 @@
 
 #include "header.h"
 #include "decode_r2004.h"
+#include "decode.h" 
 
 extern unsigned int
 bit_ckr8(unsigned int dx, unsigned char *adr, long n);
