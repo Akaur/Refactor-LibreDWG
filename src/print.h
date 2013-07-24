@@ -24,3 +24,4 @@ void
 dwg_print_object(Dwg_Object *obj);
 
 #endif
+

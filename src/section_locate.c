@@ -20,13 +20,14 @@
 
 #include "section_locate.h"
 #include "decode_r2004.h"
+#include "logging.h"
 
 extern unsigned int
 bit_ckr8(unsigned int dx, unsigned char *adr, long n);
 
 /* Read R13-R15 Object Map
  */
-static void
+void
 read_R13_R15_section_locate(Bit_Chain *dat, Dwg_Data *dwg)
 {
   unsigned int ckr, ckr2;
@@ -71,7 +72,7 @@ read_R13_R15_section_locate(Bit_Chain *dat, Dwg_Data *dwg)
  * The Section Map is a vector of number, size, and address triples used
  * to locate the sections in the file.
  */
-static void
+void
 read_R2004_section_map(Bit_Chain *dat, Dwg_Data *dwg,
                        unsigned long int comp_data_size,
                        unsigned long int decomp_data_size)

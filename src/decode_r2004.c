@@ -23,7 +23,6 @@
 
 #include "decode_r2004.h"
 #include "classes.h"
-#include "decode_r13_r15.h"
 #include "handle.h"
 #include "header.h"
 #include "logging.h"
@@ -33,6 +32,11 @@
 static unsigned int loglevel;
 
 #define DWG_LOGLEVEL loglevel
+
+/* Forward Declaration
+ */
+int
+read_literal_length(Bit_Chain* dat, unsigned char *opcode);
 
 /* Encrypted Section Header */
 typedef union _encrypted_section_header
@@ -54,7 +58,7 @@ typedef union _encrypted_section_header
 
 /* R2004 Literal Length
  */
-static int
+int
 read_literal_length(Bit_Chain* dat, unsigned char *opcode)
 {
   int total = 0;
@@ -81,7 +85,7 @@ read_literal_length(Bit_Chain* dat, unsigned char *opcode)
 
 /* R2004 Long Compression Offset
  */
-static int
+int
 read_long_compression_offset(Bit_Chain* dat)
 {
   int total = 0;
@@ -97,7 +101,7 @@ read_long_compression_offset(Bit_Chain* dat)
 
 /* R2004 Two Byte Offset
  */
-static int
+int
 read_two_byte_offset(Bit_Chain* dat, int* lit_length)
 {
   int offset;
@@ -110,7 +114,7 @@ read_two_byte_offset(Bit_Chain* dat, int* lit_length)
 
 /* Decompresses a system section of a 2004 DWG flie
  */
-static int
+int
 decompress_R2004_section(Bit_Chain* dat, char *decomp,
                          unsigned long int comp_data_size)
 {
@@ -207,7 +211,7 @@ decompress_R2004_section(Bit_Chain* dat, char *decomp,
   return 0;  // Success
 }
 
-static Dwg_Section*
+Dwg_Section*
 find_section(Dwg_Data *dwg, unsigned long int index)
 {
   int i;
@@ -223,7 +227,7 @@ find_section(Dwg_Data *dwg, unsigned long int index)
 
 /* Read R2004 Section Info
  */
-static void
+void
 read_R2004_section_info(Bit_Chain* dat, Dwg_Data *dwg,
                         unsigned long int comp_data_size,
                         unsigned long int decomp_data_size)
@@ -319,7 +323,7 @@ read_R2004_section_info(Bit_Chain* dat, Dwg_Data *dwg,
 }
 
 
-static int
+int
 read_2004_compressed_section(Bit_Chain* dat, Dwg_Data *dwg,
                             Bit_Chain* sec_dat,
                             long unsigned int section_type)

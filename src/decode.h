@@ -20,6 +20,9 @@
 #ifndef DECODE_H
 #define DECODE_H
 
+#ifndef _DWG_OBJECT_H_
+#define _DWG_OBJECT_H_
+
 #include "config.h"
 #include <stdbool.h>
 #include <stdio.h>
@@ -30,7 +33,6 @@
 #include "common.h"
 #include "bits.h"
 #include "dwg.h"
-#include "decode.h"
 #include "print.h"
 
 /*--------------------------------------------------------------------------------
@@ -202,7 +204,7 @@
   dwg_decode_common_entity_handle_data(dat, obj)
 
 #define DWG_ENTITY(token) \
-static void \
+void \
  dwg_decode_##token (Bit_Chain * dat, Dwg_Object * obj)\
 {\
   int vcount, rcount, rcount2, rcount3;\
@@ -224,7 +226,7 @@ static void \
 
 #define DWG_ENTITY_END }
 
-#define DWG_OBJECT(token) static void  dwg_decode_ ## token (Bit_Chain * dat, Dwg_Object * obj) {\
+#define DWG_OBJECT(token) void  dwg_decode_ ## token (Bit_Chain * dat, Dwg_Object * obj) {\
   int vcount, rcount, rcount2, rcount3;\
   Dwg_Object_##token *_obj;\
   Dwg_Data* dwg = obj->parent;\
@@ -241,7 +243,31 @@ static void \
     obj->handle.value)
 
 #define DWG_OBJECT_END }
+
 int
 dwg_decode_data(Bit_Chain * bit_chain, Dwg_Data * dwg_data);
+
+int
+dwg_decode_entity(Bit_Chain * dat, Dwg_Object_Entity * ent);
+
+int
+dwg_decode_object(Bit_Chain * dat, Dwg_Object_Object * ord);
+
+Dwg_Object_Ref *
+dwg_decode_handleref(Bit_Chain * dat, Dwg_Object * obj, Dwg_Data* dwg);
+
+Dwg_Object_Ref *
+dwg_decode_handleref_with_code(Bit_Chain * dat, Dwg_Object * obj,
+                               Dwg_Data* dwg, unsigned int code);
+
+void
+dwg_decode_common_entity_handle_data(Bit_Chain * dat, Dwg_Object * obj);
+
+Dwg_Resbuf*
+dwg_decode_xdata(Bit_Chain * dat, int size);
+
+#endif
+
+#undef IS_DECODER
 
 #endif

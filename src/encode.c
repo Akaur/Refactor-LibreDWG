@@ -224,7 +224,7 @@ bit_write_BE(dat, FIELD_VALUE(name.x), FIELD_VALUE(name.y), FIELD_VALUE(name.z))
     }
 
 
-/*--------------------------------------------------------------------------------*/
+/*-------------------------------------------------------------*/
 typedef struct
 {
   long int handle;
@@ -232,30 +232,8 @@ typedef struct
   unsigned int idc;
 } Object_Map;
 
-/*--------------------------------------------------------------------------------
- * Private functions prototypes
- */
+#include "dwg.spec"
 
-static void
-dwg_encode_entity(Dwg_Object * obj, Bit_Chain * dat);
-static void
-dwg_encode_object(Dwg_Object * obj, Bit_Chain * dat);
-static void
-dwg_encode_header_variables(Bit_Chain* dat, Dwg_Data * dwg);
-void
-dwg_encode_handleref(Bit_Chain * dat, Dwg_Object * obj, Dwg_Data* dwg, Dwg_Object_Ref* ref);
-void 
-dwg_encode_handleref_with_code(Bit_Chain * dat, Dwg_Object * obj,Dwg_Data* dwg, Dwg_Object_Ref* ref, int code);
-void
-dwg_encode_add_object(Dwg_Object * obj, Bit_Chain * dat, long unsigned int address);
-
-/*--------------------------------------------------------------------------------
- * Public variables
- */
-
-/*--------------------------------------------------------------------------------
- * Public functions
- */
 int
 dwg_encode_chains(Dwg_Data * dwg, Bit_Chain * dat)
 {
@@ -273,7 +251,7 @@ dwg_encode_chains(Dwg_Data * dwg, Bit_Chain * dat)
   Object_Map pvzmap;
   Dwg_Object *obj;
 
-#ifdef USE_TRACING
+  #ifdef USE_TRACING
   /* Before starting, set the logging level, but only do so once.  */
   if (! env_var_checked_p)
     {
@@ -283,7 +261,7 @@ dwg_encode_chains(Dwg_Data * dwg, Bit_Chain * dat)
         loglevel = atoi (probe);
       env_var_checked_p = true;
     }
-#endif  /* USE_TRACING */
+  #endif  /* USE_TRACING */
 
   bit_chain_alloc(dat);
 
@@ -715,8 +693,6 @@ dwg_encode_chains(Dwg_Data * dwg, Bit_Chain * dat)
   return 0;
 }
 
-#include<dwg.spec>
-
 void
 dwg_encode_add_object(Dwg_Object * obj, Bit_Chain * dat,
     long unsigned int address)
@@ -1003,7 +979,7 @@ dwg_encode_add_object(Dwg_Object * obj, Bit_Chain * dat,
   dat->bit = previous_bit;
 }
 
-static void
+void
 dwg_encode_entity(Dwg_Object * obj, Bit_Chain * dat)
 {
   //XXX not sure about this, someone should review
@@ -1121,7 +1097,7 @@ dwg_encode_handleref_with_code(Bit_Chain * dat, Dwg_Object * obj,Dwg_Data* dwg, 
   }
 };
 
-static void
+void
 dwg_encode_object(Dwg_Object * obj, Bit_Chain * dat)
 {
  //XXX need a review
@@ -1155,7 +1131,7 @@ dwg_encode_object(Dwg_Object * obj, Bit_Chain * dat)
     }
 }
 
-static void
+void
 dwg_encode_header_variables(Bit_Chain* dat, Dwg_Data * dwg)
 {
   Dwg_Header_Variables* _obj = &dwg->header_vars;

@@ -37,9 +37,7 @@ static bool env_var_checked_p;
 #define DWG_LOGLEVEL loglevel
 #endif  /* USE_TRACING */
 
-
 #define REFS_PER_REALLOC 100
-
 
 int read_r2007_meta_data(Bit_Chain *dat, Dwg_Data *dwg);
 
@@ -243,7 +241,7 @@ decode_R2007(Bit_Chain* dat, Dwg_Data * dwg)
  * Private functions
  */
 
-static int
+int
 dwg_decode_entity(Bit_Chain * dat, Dwg_Object_Entity * ent)
 {
   unsigned int i;
@@ -410,7 +408,7 @@ dwg_decode_entity(Bit_Chain * dat, Dwg_Object_Entity * ent)
   return 0;
 }
 
-static int
+int
 dwg_decode_object(Bit_Chain * dat, Dwg_Object_Object * ord)
 {
   unsigned int i;
@@ -479,7 +477,7 @@ dwg_decode_object(Bit_Chain * dat, Dwg_Object_Object * ord)
 }
 
 
-static Dwg_Object_Ref *
+Dwg_Object_Ref *
 dwg_decode_handleref(Bit_Chain * dat, Dwg_Object * obj, Dwg_Data* dwg)
 {
   // Welcome to the house of evil code!
@@ -548,7 +546,7 @@ dwg_decode_handleref(Bit_Chain * dat, Dwg_Object * obj, Dwg_Data* dwg)
   return ref;
 }
 
-static Dwg_Object_Ref *
+Dwg_Object_Ref *
 dwg_decode_handleref_with_code(Bit_Chain * dat, Dwg_Object * obj, Dwg_Data* dwg, unsigned int code)
 {
   Dwg_Object_Ref * ref;
@@ -571,7 +569,7 @@ dwg_decode_handleref_with_code(Bit_Chain * dat, Dwg_Object * obj, Dwg_Data* dwg,
   return ref;
 }
 
-static void
+void
 dwg_decode_common_entity_handle_data(Bit_Chain * dat, Dwg_Object * obj)
 {
 
@@ -773,5 +771,3 @@ dwg_decode_xdata(Bit_Chain * dat, int size)
     }
     return root;
 }
-
-#undef IS_DECODER

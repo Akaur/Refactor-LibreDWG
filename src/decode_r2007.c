@@ -330,7 +330,7 @@ copy_compressed_bytes(char *dst, char *src, int length)
 }
 
 /* See spec version 5.1 page 50 */
-uint32_t
+static uint32_t
 read_literal_length(unsigned char **src, unsigned char opcode)
 {
   uint32_t length = opcode + 8;

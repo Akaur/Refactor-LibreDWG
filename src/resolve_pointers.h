@@ -18,6 +18,9 @@
  * modified by Till Heuschmann
  */
 
+#ifndef _DWG_OBJECT_H_
+#define _DWG_OBJECT_H_
+
 #include "config.h"
 #include <stdbool.h>
 #include <stdio.h>
@@ -28,11 +31,12 @@
 #include "common.h"
 #include "bits.h"
 #include "dwg.h"
-#include "decode.h"
 #include "print.h"
 
-static void
+void
 resolve_objectref_vector(Dwg_Data * dwg);
 
-static Dwg_Object *
+Dwg_Object *
 dwg_resolve_handle(Dwg_Data* dwg, unsigned long int handle);
+
+#endif

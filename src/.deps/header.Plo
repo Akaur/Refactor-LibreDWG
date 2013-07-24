@@ -1,4 +1,4 @@
-header.lo: header.c header.h config.h \
+header.lo: header.c decode.h config.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.7/include/stdbool.h /usr/include/stdio.h \
  /usr/include/features.h /usr/include/stdc-predef.h \
  /usr/include/x86_64-linux-gnu/bits/predefs.h \
@@ -33,10 +33,10 @@ header.lo: header.c header.h config.h \
  /usr/include/xlocale.h /usr/include/x86_64-linux-gnu/bits/string.h \
  /usr/include/x86_64-linux-gnu/bits/string2.h \
  /usr/include/x86_64-linux-gnu/bits/string3.h /usr/include/assert.h \
- common.h bits.h dwg.h print.h logging.h decode_r2004.h decode.h \
+ common.h bits.h dwg.h print.h header.h decode_r2004.h logging.h \
  header_variables.spec
 
-header.h:
+decode.h:
 
 config.h:
 
@@ -138,10 +138,10 @@ dwg.h:
 
 print.h:
 
-logging.h:
+header.h:
 
 decode_r2004.h:
 
-decode.h:
+logging.h:
 
 header_variables.spec:

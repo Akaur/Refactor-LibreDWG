@@ -35,8 +35,8 @@ decode_r2004.lo: decode_r2004.c \
  /usr/include/xlocale.h /usr/include/x86_64-linux-gnu/bits/string.h \
  /usr/include/x86_64-linux-gnu/bits/string2.h \
  /usr/include/x86_64-linux-gnu/bits/string3.h /usr/include/assert.h \
- common.h bits.h dwg.h print.h classes.h logging.h decode_r13_r15.h \
- handle.h header.h resolve_pointers.h decode.h section_locate.h
+ common.h bits.h dwg.h print.h classes.h handle.h header.h logging.h \
+ resolve_pointers.h section_locate.h
 
 /usr/lib/gcc/x86_64-linux-gnu/4.7/include/stdint.h:
 
@@ -148,16 +148,12 @@ print.h:
 
 classes.h:
 
-logging.h:
-
-decode_r13_r15.h:
-
 handle.h:
 
 header.h:
 
-resolve_pointers.h:
+logging.h:
 
-decode.h:
+resolve_pointers.h:
 
 section_locate.h:

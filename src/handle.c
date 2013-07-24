@@ -27,7 +27,7 @@ bit_ckr8(unsigned int dx, unsigned char *adr, long n);
 
 /* Read R13-R15 Object-map Section
  */
-static void
+void
 read_R13_R15_section_object_map(Bit_Chain *dat, Dwg_Data *dwg)
 {
   unsigned int section_size = 0;
@@ -172,7 +172,7 @@ read_R13_R15_section_object_map(Bit_Chain *dat, Dwg_Data *dwg)
 
 /* R2004 Handles Section
  */
-static void
+void
 read_2004_section_handles(Bit_Chain *dat, Dwg_Data *dwg)
 {
   unsigned int section_size = 0;

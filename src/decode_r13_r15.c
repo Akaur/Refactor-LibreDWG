@@ -22,14 +22,14 @@
 #include "decode_r13_r15.h"
 #include "handle.h"
 #include "header.h"
-//#include "object.h"
+#include "logging.h"
 #include "resolve_pointers.h"
 #include "section_locate.h"
 
 
 /* Read Unknown Section 
  */
-static void
+void
 read_section_unknown(Bit_Chain *dat, Dwg_Data *dwg)
 {
   if (dwg->header.num_sections == 6)
@@ -54,7 +54,7 @@ read_section_unknown(Bit_Chain *dat, Dwg_Data *dwg)
 
 /* Read Picture Section
  */
-static void
+void
 read_section_picture(Bit_Chain *dat, Dwg_Data *dwg)
 {
   if (bit_search_sentinel(dat, dwg_sentinel(DWG_SENTINEL_PICTURE_BEGIN)))
@@ -83,7 +83,7 @@ read_section_picture(Bit_Chain *dat, Dwg_Data *dwg)
 
 /* Read Second Header
  */
-static void
+void
 read_section_second_header(Bit_Chain *dat, Dwg_Data *dwg)
 {
   if (bit_search_sentinel(dat, 
@@ -198,7 +198,7 @@ read_section_second_header(Bit_Chain *dat, Dwg_Data *dwg)
 
 /* Read Section Measurement
  */
-static void
+void
 read_section_measurement(Bit_Chain *dat, Dwg_Data *dwg)
 {
   LOG_INFO("\n Unknown 2: %8X\n",
@@ -281,5 +281,3 @@ decode_R13_R15(Bit_Chain *dat, Dwg_Data *dwg)
 
   return 0;
 }
-
-

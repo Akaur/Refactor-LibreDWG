@@ -194,4 +194,7 @@ bit_print(Bit_Chain * dat, long unsigned int size);
 void
 bit_explore_chain(Bit_Chain * dat, long unsigned int size);
 
+unsigned int
+bit_ckr8(unsigned int dx, unsigned char *adr, long n);
+
 #endif

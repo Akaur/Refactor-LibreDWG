@@ -18,6 +18,9 @@
  * modified by Till Heuschmann
  */
 
+#ifndef _DWG_OBJECT_H_
+#define _DWG_OBJECT_H_
+
 #include "config.h"
 #include <stdbool.h>
 #include <stdio.h>
@@ -33,21 +36,16 @@
 int
 decode_R13_R15(Bit_Chain *dat, Dwg_Data *dwg);
 
-static void
+void
 read_section_unknown(Bit_Chain *dat, Dwg_Data *dwg);
 
-static void
+void
 read_section_picture(Bit_Chain *dat, Dwg_Data *dwg);
 
-static void
+void
 read_section_second_header(Bit_Chain *dat, Dwg_Data *dwg);
 
-static void
+void
 read_section_measurement(Bit_Chain *dat, Dwg_Data *dwg);
 
-
-
-
-
-
-
+#endif

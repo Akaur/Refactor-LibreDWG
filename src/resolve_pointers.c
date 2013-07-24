@@ -20,8 +20,10 @@
 
 
 #include "resolve_pointers.h"
+#include "logging.h"
+#include "decode.h"
 
-static void
+void
 resolve_objectref_vector(Dwg_Data * dwg)
 {
   long unsigned int i;
@@ -63,7 +65,7 @@ resolve_objectref_vector(Dwg_Data * dwg)
 /**
  * Find a pointer to an object given it's id (handle)
  */
-static Dwg_Object *
+Dwg_Object *
 dwg_resolve_handle(Dwg_Data* dwg, long unsigned int absref)
 {
   //FIXME find a faster algorithm
@@ -78,6 +80,4 @@ dwg_resolve_handle(Dwg_Data* dwg, long unsigned int absref)
   LOG_ERROR("Object not found: %lu\n", absref)
   return 0;
 }
-
-
 

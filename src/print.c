@@ -148,7 +148,7 @@
 #define COMMON_ENTITY_HANDLE_DATA /*  Empty */
 
 #define DWG_ENTITY(token) \
-static void \
+void \
 dwg_print_##token (Bit_Chain * dat, Dwg_Object * obj)\
 {\
   int vcount, rcount, rcount2, rcount3;\
@@ -164,7 +164,7 @@ dwg_print_##token (Bit_Chain * dat, Dwg_Object * obj)\
 #define DWG_ENTITY_END }
 
 #define DWG_OBJECT(token) \
-static void \
+void \
 dwg_print_ ##token (Bit_Chain * dat, Dwg_Object * obj) \
 { \
   int vcount, rcount, rcount2, rcount3;\

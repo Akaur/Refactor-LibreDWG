@@ -26,4 +26,25 @@
 int
 dwg_encode_chains(Dwg_Data * dwg_struct, Bit_Chain * bitaro);
 
+void
+dwg_encode_entity(Dwg_Object * obj, Bit_Chain * dat);
+
+void
+dwg_encode_object(Dwg_Object * obj, Bit_Chain * dat);
+
+void
+dwg_encode_header_variables(Bit_Chain* dat, Dwg_Data * dwg);
+
+void
+dwg_encode_handleref(Bit_Chain * dat, Dwg_Object * obj,
+                     Dwg_Data* dwg, Dwg_Object_Ref* ref);
+
+void 
+dwg_encode_handleref_with_code(Bit_Chain * dat, Dwg_Object * obj,
+                               Dwg_Data* dwg, Dwg_Object_Ref* ref, int code);
+
+void
+dwg_encode_add_object(Dwg_Object * obj, Bit_Chain * dat,
+                      long unsigned int address);
+
 #endif

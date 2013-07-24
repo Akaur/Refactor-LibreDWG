@@ -19,13 +19,15 @@
  */
 
 #include "section_locate.h"
+#include "decode_r2004.h"
+#include "logging.h"
 
 extern unsigned int
 bit_ckr8(unsigned int dx, unsigned char *adr, long n);
 
 /* Read R13-R15 Object Map
  */
-static void
+void
 read_R13_R15_section_locate(Bit_Chain *dat, Dwg_Data *dwg)
 {
   unsigned int ckr, ckr2;

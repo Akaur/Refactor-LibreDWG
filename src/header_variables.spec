@@ -16,8 +16,6 @@
  * modified by Anderson Cardoso
  */
 
-
-
 /*
   VERSION(R_2007)
     {

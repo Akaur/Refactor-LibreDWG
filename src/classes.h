@@ -18,6 +18,9 @@
  * modified by Till Heuschmann
  */
 
+#ifndef _DWG_OBJECT_H_
+#define _DWG_OBJECT_H_
+
 #include "config.h"
 #include <stdbool.h>
 #include <stdio.h>
@@ -28,13 +31,11 @@
 #include "common.h"
 #include "bits.h"
 #include "dwg.h"
-#include "print.h"
-#include "logging.h"
 
-static void
+void
 read_R13_R15_section_classes(Bit_Chain *dat, Dwg_Data *dwg);
 
-static void
+void
 read_2004_section_classes(Bit_Chain* dat, Dwg_Data *dwg);
 
-
+#endif

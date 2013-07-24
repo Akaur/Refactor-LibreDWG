@@ -11,12 +11,15 @@
 /*****************************************************************************/
 
 /*
- * section_locate.h: section/object map functions
+ * section_locate.h: locating section functions
  * written by Felipe Castro
  * modified by Felipe Corrêa da Silva Sances
  * modified by Rodrigo Rodrigues da Silva
  * modified by Till Heuschmann
  */
+
+#ifndef _DWG_OBJECT_H_
+#define _DWG_OBJECT_H_
 
 #include "config.h"
 #include <stdbool.h>
@@ -30,11 +33,12 @@
 #include "dwg.h"
 #include "print.h"
 
-static void
+void
 read_R13_R15_section_locate(Bit_Chain *dat, Dwg_Data *dwg);
 
-static void
+void
 read_R2004_section_map(Bit_Chain* dat, Dwg_Data * dwg,
                        unsigned long int comp_data_size,
                        unsigned long int decomp_data_size);
 
+#endif

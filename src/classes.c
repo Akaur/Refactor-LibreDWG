@@ -21,13 +21,14 @@
 
 #include "classes.h"
 #include "decode_r2004.h"
+#include "logging.h"
 
 extern unsigned int
 bit_ckr8(unsigned int dx, unsigned char *adr, long n);
 
 /* Read R13_R15 Classes Section
  */
-static void
+void
 read_R13_R15_section_classes(Bit_Chain *dat, Dwg_Data *dwg)
 {
   long unsigned int size;
@@ -109,7 +110,7 @@ read_R13_R15_section_classes(Bit_Chain *dat, Dwg_Data *dwg)
 
 /* R2004 Class Section
  */
-static void
+void
 read_2004_section_classes(Bit_Chain* dat, Dwg_Data *dwg)
 {
   unsigned long int size;

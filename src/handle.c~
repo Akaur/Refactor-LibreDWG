@@ -27,8 +27,8 @@ bit_ckr8(unsigned int dx, unsigned char *adr, long n);
 
 /* Read R13-R15 Object-map Section
  */
-static void
-read_R13_R15_section_object_map(Bit_Chain *dat, Dwg_data *dwg)
+void
+read_R13_R15_section_object_map(Bit_Chain *dat, Dwg_Data *dwg)
 {
   unsigned int section_size = 0;
   unsigned char sgdc[2];

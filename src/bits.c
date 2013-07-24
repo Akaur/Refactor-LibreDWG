@@ -28,16 +28,6 @@
 #include "bits.h"
 #include "logging.h"
 
-/*------------------------------------------------------------------------------
- * Private functions prototypes
- */
-unsigned int
-bit_ckr8(unsigned int dx, unsigned char *adr, long n);
-
-/*------------------------------------------------------------------------------
- * Public functions
- */
-
 /* Advance bits (forward or backward)
  */
 void
